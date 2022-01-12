@@ -23,7 +23,7 @@ dictionary = {"name": "Vu Thanh Tai", "age": 22, "male": True}
 #Dictionary
 
 #Ep kieu du lieu: 
-age = 22
+age = 10
 
 # ép sang float
 floatAge = float(age)
