@@ -2,7 +2,6 @@ def tong2so(a,b):
     return a+b
 print("tong 2 so la " + str(tong2so(2,3)))
 
-
 def sumnhieuso(*num):
     temp = 0
     for i in num:
