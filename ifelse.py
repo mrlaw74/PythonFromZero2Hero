@@ -11,5 +11,4 @@ dic = {
     'ba': 3,
 }
 print(dic.get(a,'khong ro')) # get() method, if not have a in dic, will print "khong ro"
-
 # Ket Qua: 2
