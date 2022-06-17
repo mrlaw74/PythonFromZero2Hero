@@ -13,5 +13,11 @@
 # #     # print(question.keys()[index])
 # #     print(item)
 # #     print(question.get(index))
-import string
-print(string.punctuation)
+# import string
+# print(string.punctuation)
+# heart = "\u2764\uFE0F "
+# print(9*heart)
+str_arr = "Hello"
+list1 = list(str_arr)
+print(list1)
+
