@@ -1,4 +1,5 @@
 class Person:
+    power = 50
     def __init__(self, name, age, male):
         self.name = name
         self.age = age
@@ -38,6 +39,13 @@ student1 = Student("Luat2", 24, True)
 print(student1.getID())
 print(student1.ID)
 
+student1.power = 40
+print(Person.power)
+print(student1.power)
+
+Person.power = 40
+print(Person.power)
+print(student1.power)
 # student1 = Student(person1, 3120, "ABC")
 # print(student1.school)
 # print(student1.getSchool())
