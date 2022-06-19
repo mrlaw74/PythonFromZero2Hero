@@ -66,3 +66,4 @@ class Student():
             print(f"{self.ID} duoc hoc bong =)).")
         else:
             print(f"{self.ID} khong duoc hoc bong =)).")
+            
