@@ -1,4 +1,5 @@
 import requests
+<<<<<<< HEAD
 import hashlib
 import sys
 
@@ -39,3 +40,8 @@ def main(args):
             print(f"{password} was not found. Carry on!")
     return 'done!'
 main(sys.argv[1:2])
+=======
+url = 'https://api.pwnedpasswords.com/range/' + 'CBFD2'
+res = requests.get(url)
+print(res)
+>>>>>>> 0cf343a65e491ecdb292cd40c2c6ad02e833f860
