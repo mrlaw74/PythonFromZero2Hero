@@ -38,9 +38,7 @@ def main(args):
         else:
             print(f"{password} was not found. Carry on!")
     return 'done!'
-<<<<<<< HEAD
+
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
-=======
-main(sys.argv[1:2])
->>>>>>> 1240320e2112a89a8c4a75b094dc2789d5fd50a7
+
