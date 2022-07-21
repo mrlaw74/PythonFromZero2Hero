@@ -33,4 +33,8 @@ def create_custom_hn(links, votes):
 # print(votes)
 # print(create_custom_hn(links, votes))
 (create_custom_hn(links, votes))
+
 print(soup.select('.storylink'))
+
+print(soup.select('.storylink'))
+
