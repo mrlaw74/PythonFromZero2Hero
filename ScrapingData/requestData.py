@@ -17,7 +17,6 @@ soup = BeautifulSoup(res.text, 'html.parser')
 # # print('\n')
 # # print(soup.find(id = '32126637'))
 # # print(soup.select('.score'))
-
 links = soup.select('.titlelink')
 votes = soup.select('.score')
 
@@ -34,3 +33,4 @@ def create_custom_hn(links, votes):
 # print(votes)
 # print(create_custom_hn(links, votes))
 (create_custom_hn(links, votes))
+print(soup.select('.storylink'))
