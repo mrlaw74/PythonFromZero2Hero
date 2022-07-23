@@ -25,16 +25,13 @@ def create_custom_hn(links, votes):
     for idx, item in enumerate(links):
         title = links[idx].getText()
         href = links[idx].get('href', None)
-        points = votes[idx].getText()
+        points = int(votes[idx].getText().replace('points', ''))
         print(points)
         # hn.append(title)
         hn.append({'title': title, 'link': href})
     return hn
 # print(votes)
 # print(create_custom_hn(links, votes))
-(create_custom_hn(links, votes))
+print(create_custom_hn(links, votes))
 
-print(soup.select('.storylink'))
-
-print(soup.select('.storylink'))
 
