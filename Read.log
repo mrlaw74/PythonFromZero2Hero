@@ -1,0 +1,445 @@
+== Manual Widget Test cases - Widget 2D
+
+This document is for writing manual test cases.
+
+=== AnimationWidget2D
+
+Widget Guide:
+
+https://rbcm-jen-hmib.hi.de.bosch.com:8443/job/nb_w_cmdgen3_userdocu_copy/ws/HMIBaseWidgetGuide/HMIBaseWidgetGuide-CGI.html#_solidcoloreffect_2d_anchor_id_widget2d_solidcoloreffect_xreflabel_widget2d_solidcoloreffect
+
+Widget Referrence:
+
+https://rbcm-jen-hmib.hi.de.bosch.com:8443/job/nb_w_cmdgen3_userdocu_copy/ws/HMIBaseWidgetGuide/WidgetReference.html#_solidcoloreffectwidget2d_asciidoc_br
+
+OPL:
+
+https://rb-alm-20-p.de.bosch.com/ccm/web/projects/CM%20Distribution%20(CMD)#action=com.ibm.team.workitem.viewWorkItem&id=1423184
+
+==== TC_W01_01_01[[TC_W01_01_01]]
+
+Feature: Scale
+
+. [big red]#Feature Description#
++
+Test feature 'Scale' from the widget 'AnimationWidget2D'.
++
+Short description for feature 'Scale'
+
+. [big red]#Test Instruction#
+
+.. [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+.. [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+==== TC_W01_01_02[[TC_W01_01_02]]
+
+Feature: Scale
+
+. [big red]#Feature Description#
++
+Test feature 'Scale' from the widget 'AnimationWidget2D'.
++
+Short description for feature 'Scale'
+
+. [big red]#Test Instruction#
+
+.. [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+.. [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+==== TC_W02_01_01[[TC_W02_01_01]]
+
+Feature: Alpha
+
+. [big red]#Feature Description#
++
+Test feature Alpha from the widget 'AnimationWidget2D'.
++
+Short description for feature Alpha
+
+. [big red]#Test Instruction#
+
+.. [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+.. [red]#Action 1#
++
+Click on the Alpha button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+==== TC_W03_01_01[[TC_W03_01_01]]
+
+Feature: Position
+
+. [big red]#Feature Description#
++
+Test feature Position from the widget 'AnimationWidget2D'.
++
+Short description for feature Position
+
+. [big red]#Test Instruction#
+
+.. [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+.. [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+==== TC_W03_01_02[[TC_W03_01_02]]
+
+Feature: Position
+
+. [big red]#Feature Description#
++
+Test feature Position from the widget 'AnimationWidget2D'.
++
+Short description for feature Position
+
+. [big red]#Test Instruction#
+
+.. [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+.. [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+==== TC_W03_01_03[[TC_W03_01_03]]
+
+Feature: Position
+
+. [big red]#Feature Description#
++
+Test feature Position from the widget 'AnimationWidget2D'.
++
+Short description for feature Position
+
+. [big red]#Test Instruction#
+
+.. [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+.. [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+.. [red]#Action 3#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+.. [red]#Expected 3#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
