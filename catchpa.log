@@ -1,0 +1,189 @@
+import os
+import sys
+import fnmatch
+import re
+
+TCLIST_OT_FILENAME_CSV           = 'manual.csv'
+
+def checkPath( path ):
+    # check path
+    if not os.path.isdir( path ):
+        print ("ERROR: Path to  <" + path + "> is not a valid path.")
+        sys.exit (1)
+
+def findFiles(pattern, nameOfFolder):
+    results = []
+    # pattern = '*.py'
+    for name in os.listdir(nameOfFolder):
+        # if os.path.isfile(os.path.join(nameOfPath, name)) and fnmatch.fnmatch(name, pattern):
+        if fnmatch.fnmatch(name, pattern):
+            results.append(name)
+    return results
+
+class TCDocInformation:
+    'Common base class for Test Case Information from Manual Test Case Documentation'
+    cnt = 0
+
+    def __init__(self, scope, group, testId, subgroup, feature, subgroupdescrip, subgroupinstruct, subgroupexpected, subgroupactual, status, comment, knowissues):
+        self.scope               = scope               # == Widget Test Cases
+        self.group               = group               # ===  ButtonWidget
+        self.subgroup            = subgroup            # ==== TC_W04_01
+        self.testId              = testId              # (. Related Test cases): .. TC_W04_01_01[[TC_W04_01_01]]
+        self.feature             = feature             # Feature: Scale 
+        self.subgroupdescrip     = subgroupdescrip     # . Testcase Description  + ...
+        self.subgroupinstruct    = subgroupinstruct   # . Test instructions  + ...
+        self.subgroupexpected    = subgroupexpected    # . Expected result  + ...
+        self.subgroupactual      = subgroupactual    # . Obtained result  + ...
+        self.status              = status              # ... Widget being tested + ...
+        self.comment             = comment        # link to adoc
+        self.knowissues          = knowissues        # link to adoc
+        # TCDocInformation.cnt += 1
+
+def collectTestCaseInformationFromDocs(tcInfoFileNames, pathForLink2Doc):
+    # dictionary with class TCDocInformation elements
+    tcInfoDic = { '0' : '' }
+    del tcInfoDic['0']
+
+    state           = None
+    stateSubGroup   = 1
+    subgroupContent = ''
+    scope           = ''
+    group           = ''
+    testscope       = ''
+    childtestscope  = ''
+    feature         = ''
+    featureDescrip  = ''
+    preCondition    = ''
+    action          = ''
+    expected        = ''
+    # subgroupdescrip = ''
+    # subproperty     = ''
+
+    subgroupdescrip = ''
+    subgroupprecondition = ''
+    subgroupaction = ''
+    subgroupexpected = ''
+
+    DescripFlag         = 1
+    PreConditionflag    = 2
+    ActionFlag          = 3
+    ExpectedFlag        = 4
+
+    path2Docs  = './'        # (sub) path to Test Case description (on Jenkins)
+
+    # searchDocName  = r'(UserGuide\HMIBaseTest\ListOfTestCases\)([a-zA-Z0-9_].adoc))'
+    searchScope    = r'^\s*?[=]{2}\s+?([a-zA-Z0-9_\.\s]+ (.*)).*?'                       # == Manual Widget Test cases - Widget 2D
+    searchGroup    = r'^\s*?[=]{3}\s+?([a-zA-Z0-9_\.\s]+).*?'                       # === AnimationWidget2D
+    # searchSubGroup = r'^\s*?[=]{4}\s+?([a-zA-Z0-9_\.\s]+).*?'                       # ==== UI Design
+    searchTestScope = r'^\s*?[=]{4}\s+?(TC_[A-Z]{1,2}\d\d_\d\d)\[\[(.*)\]\].*?' # ==== TC_W01_01[[TC_W01_01]]
+    searchChildTestScope = r'^\s*?[\.]{2}\s+?(TC_[A-Z]{1,2}\d\d_\d\d_\d\d).*?' # ==== TC_W01_01_01[[TC_W01_01_01]]
+    searchFeature              = r'Feature:\s*(.+)'                                             # Feature: 
+    searchFeatureDescrip  = r'.\s\[big\sred\]\#*(.+)'        # Feature description and Related
+    searchPreCondition  = r'^\s*?[\.]{3}\s.+?(Pre-condition#).*?'        # Feature description and Related
+    searchAction  = r'^\s*?[\.]{3}\s.+?(Action\s).*?'        # Feature description and Related
+    searchExpected  = r'^\s*?[\.]{3}\s.+?(Expected\s).*?'        # Feature description and Related
+    # searchContent  = r'^\s*?=.*?'                                                   #
+    searchNoContent            = r'^\s*?[\.]{1}.*?'
+
+    # over Test Case Documentation files
+    for fileName in sorted( tcInfoFileNames ):
+        filename = os.path.basename(fileName)                   # get file name from complete workspace
+        linkTestAdoc = path2Docs + filename                     # buildup the path to docs in Jenkins work space
+        with open(fileName, 'r') as f:
+            for line in f:
+                match =  re.search( searchScope, line )         # search begin of scope; e.g.: == List of Widget Test Cases
+                if match != None:
+                    scope = match.group(1)                          # get scope information; e.g.: = List of Widget Test Cases
+                    scope = re.sub('\r\n|\n|\s{2,}', '', scope)     # substitute newline and whitespaces
+                    print(scope)
+
+                match =  re.search( searchGroup, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    group = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    group = re.sub('\r\n|\n|\s{2,}', '', group)     # substitute newline and whitespaces
+                    print(group)
+
+                match =  re.search( searchTestScope, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    testscope = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    testscope = re.sub('\r\n|\n|\s{2,}', '', testscope)     # substitute newline and whitespaces
+                    print(testscope)
+
+                match =  re.search( searchFeature, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    feature = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    feature = re.sub('\r\n|\n|\s{2,}', '', feature)     # substitute newline and whitespaces
+                    print(feature)
+
+                match =  re.search( searchFeatureDescrip, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    state = DescripFlag                      # check for already subgroup info is available
+                    featureDescrip = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    featureDescrip = re.sub('\r\n|\n|\s{2,}', '', featureDescrip)     # substitute newline and whitespaces
+                    print(featureDescrip)
+                    
+                match =  re.search( searchChildTestScope, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    childtestscope = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    childtestscope = re.sub('\r\n|\n|\s{2,}', '', childtestscope)     # substitute newline and whitespaces
+                    print(childtestscope)
+
+                match =  re.search( searchPreCondition, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    state = PreConditionflag                                    # reset state if actual line begins with one or more '='
+                    preCondition = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    preCondition = re.sub('\r\n|\n|\s{2,}', '', preCondition)     # substitute newline and whitespaces
+                    print(preCondition)
+                match =  re.search( searchAction, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    state = ActionFlag                                    # reset state if actual line begins with one or more '='
+                    action = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    action = re.sub('\r\n|\n|\s{2,}', '', action)     # substitute newline and whitespaces
+                    print(action)
+                match =  re.search( searchExpected, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    state = ExpectedFlag                                    # reset state if actual line begins with one or more '='
+                    expected = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    expected = re.sub('\r\n|\n|\s{2,}', '', expected)     # substitute newline and whitespaces
+                    print(expected)
+
+                match =  re.search(searchNoContent, line)                   # if line does NOT beginning with '.'
+                if match == None:                                           # copy content according to the recognized subgroup item
+                    if state == DescripFlag:
+                        subgroupdescrip = subgroupdescrip + line                # copy Test Case Description content
+                        # print(subgroupdescrip)
+                    elif state == PreConditionflag:
+                        subgroupprecondition = subgroupprecondition + line              # copy Expected Result content
+                        # print(subgroupprecondition)
+                    elif state == ActionFlag:
+                        subgroupaction = subgroupaction + line              # copy Obtained Result content
+                        # print(subgroupaction)
+                    elif state == ExpectedFlag:
+                        subgroupexpected = subgroupexpected + line + '\n'     # copy related Test Cases content (content lines)
+                        # print(subgroupexpected)
+            print(f"\nFeature Description: \n{subgroupdescrip}'\n'")
+            print(f"\nPre-Condition: \n{subgroupprecondition}'\n'")
+            print(f"\nAction: \n{subgroupaction}'\n'")
+            print(f"\nExpected: \n{subgroupexpected}'\n'")
+
+        f.close()
+        # check for last info from end of file
+        if state == stateSubGroup:                      # check for already subgroup info is available
+            # evalSubGroupContent(subgroupContent, scope, group, subgroup, linkTestAdoc, tcInfoDic)
+            subgroupContent = ''                        # reset subgroup information
+        state = None                                    # reset state if actual line begins with one or more '='
+
+    return tcInfoDic
+
+def genCSVFile(tcInfoDic, path):
+    resultFirstLine = 'Hello. \n'
+    resultHeadLine = 'Name of Widget,Test Scope ID,Requirement/ Feature,Short test description,Test instructions,Expected Results,Actual Results,Status,Comment,Known issues\n'
+    fileName =os.path.join(path, TCLIST_OT_FILENAME_CSV)
+    f = open( fileName, 'w' )
+    fileContent = resultFirstLine + resultHeadLine
+    # Adding content in adoc files
+
+
+
+    f.write( fileContent )
+    f.close()
