@@ -1,0 +1,22 @@
+import os
+import TCDescrip
+
+TC_LIST_ADOC_NAME           = '*.adoc'
+
+if __name__ == "__main__":
+
+    currentPath = os.path.dirname(os.path.realpath( __file__ ))
+    #/home/nul3hc/vmshare/Python/ManualTest
+
+    # Find all adoc files in a Path
+    tcDocFileNamesAutomated = TCDescrip.findFiles(TC_LIST_ADOC_NAME, currentPath)
+
+    # Remove unexpected characters from files
+    # TCDescrip.remove_char_from_file(tcDocFileNamesAutomated)
+
+    # Collect TCs information from Adoc file
+    tcDocInfoDicAutomated = TCDescrip.collectTestCaseInformationFromDocs(tcDocFileNamesAutomated)
+
+    # Create Output file
+    TCDescrip.createOutputFileCsv(tcDocInfoDicAutomated, currentPath)
+    print(f"Done!!!!!!!!!!!!!!!")
