@@ -1,0 +1,286 @@
+import os
+import sys
+import fnmatch
+import re
+TCLIST_OT_FILENAME_CSV      = 'ManualInfo.csv'
+
+def remove_char_from_file(li):
+    for i in li:
+        file = open(i, 'r+')
+        s = file.read().replace(",", ";")
+        file.close()
+        file = open(i, 'w')
+        file.write(s)
+        file.close()
+
+def checkPath( path ):
+    # check path
+    if not os.path.isdir( path ):
+        print ("ERROR: Path to  <" + path + "> is not a valid path.")
+        sys.exit (1)
+
+def checkPathIsValid(path = './'):
+    # Method 1: os.path.exists()
+    isExist = os.path.exists(path)
+    return isExist
+
+def findFiles(pattern, nameOfFolder):
+    results = []
+    # pattern = '*.py'
+    for name in os.listdir(nameOfFolder):
+        if fnmatch.fnmatch(name, pattern):
+            results.append(name)
+    return results
+
+def stripDetails(details):
+    searchFTLinkInDetails = r'^(.*?)(link:https://.*?\]\]).*?'  # e.g.: link:https://.../FeatureTrace.html#TC_W18_02_01[[TC_W18_02_01\]]
+    searchTCDescInDetails = r'^(Testcase Description )(.*)'     # e.g.: "TestCase Description Test the bindable property ..."
+
+    details = re.sub('\+|\s+', ' ', details)                    # substitute '+' signs and whitespaces
+    details  = details.strip()
+    linkMatch = re.search(searchFTLinkInDetails, details)       # get the link to Feature Trace overview out of the details
+    if linkMatch != None:
+        details = linkMatch.group(1)                            # if there's a link in the details copy only the first details (without linkto Feature Trace overview)
+    descripMatch      = re.search(searchTCDescInDetails, details)    # check if the text 'Testcase Description ' is present and should be removed
+    if descripMatch != None:
+        details = descripMatch.group(2)                         # if there's the 'TestCase Description ' we only want the text behind.
+        details  = details.strip()
+    return details
+
+class TCDocInformation:
+    'Common base class for Test Case Inormation from Test Case Documentation'
+    cnt = 0
+
+    def __init__(self, scope, group, subgroup, subfeature, subgroupdescrip, testId, subgroupprecondition, subgroupaction, subgroupexpected):
+        self.scope               = scope                # == Widget Test Cases
+        self.group               = group                # ===  ButtonWidget
+        self.subgroup            = subgroup             # ==== TC_W04_01
+        self.subfeature          = subfeature           # Feature: Scale
+        self.subgroupdescrip     = subgroupdescrip      # . [big red]#Feature Description#
+        self.testId              = testId               # .. TC_W02_01_01[[TC_W02_01_01]]
+        self.subgroupprecondition= subgroupprecondition # ... [red]#Pre-condition#
+        self.subgroupaction      = subgroupaction       # ... [red]#Action X#
+        self.subgroupexpected    = subgroupexpected     # ... [red]#Expected X#
+        TCDocInformation.cnt += 1
+
+def writeTestIdInfo(subgrouptestcase, scope, group, subgroup, subfeature, subgroupdescrip, subgroupinstruct, subgroupexpected, subgroupprecondition, subgroupaction, tcInfoDic):
+
+    # 1. format the given strings. Remove special characters and trim/strip the leading and trailing whitespaces
+    subgroupdescrip     = re.sub('\r\n|\n|\s+', ' ', subgroupdescrip)  # substitute newline and whitespaces with one spaces
+    subgroupinstruct    = re.sub('\r\n|\n|\s+', ' ', subgroupinstruct)
+    subgroupexpected    = re.sub('\r\n|\n|\s+', ' ', subgroupexpected)
+    subgroupprecondition    = re.sub('\r\n|\n|\s+', ' ', subgroupprecondition)
+    subgroupaction    = re.sub('\r\n|\n|\s+', ' ', subgroupaction)
+    subgroupdescrip     = re.sub('\+', ': ', subgroupdescrip)          # substitute '+' with ': ' and whitespaces
+    subgroupinstruct    = re.sub('\+', ': ', subgroupinstruct)          # substitute '+' with ': ' and whitespaces
+    subgroupexpected    = re.sub('\+', ': ', subgroupexpected)
+    subgroupprecondition    = re.sub('\+', ': ', subgroupprecondition)
+    subgroupaction    = re.sub('\+', ': ', subgroupaction)
+    subgroupdescrip     = subgroupdescrip.strip()                      # remove leading and trailing spaces
+    subgroupinstruct    = subgroupinstruct.strip()                      # remove leading and trailing spaces
+    subfeature          = subfeature.strip()
+    subgroupexpected    = subgroupexpected.strip()
+    subgroupprecondition    = subgroupprecondition.strip()
+
+    state                   = None
+    SubGroupTCTestID        = 1
+    SubGroupTCTestIdDetails = 2
+    testId                  = ''
+    details                 = ''
+    searchItemTestCaseTestID         = r'^\s*?[\.]{2}\s+?(TC_[A-Z]{1,2}\d\d_\d\d_\d\d).*?'
+    searchItemTestCaseTestIDDetails  = r'^\s*?[\.]{3}\s+?([a-zA-Z0-9_\.\s]+).*?'
+    searchNoContent                  = r'^\s*?[\.]{1}.*?'
+
+    lines = subgrouptestcase.splitlines()
+    for line in lines:
+
+        match =  re.search(searchNoContent, line)               # check that line does NOT begin with '.'
+        if match == None:
+            if state == SubGroupTCTestIdDetails:                # copy Test ID details only in state details
+                details = details + " " + line                  # copy further details
+
+        match =  re.search(searchItemTestCaseTestID, line)      # search for TestId: e.g.: .. TC_W04_01_01[[TC_W04_01_01]]
+        if match != None:
+            # check if there was already another Test ID -> save Test ID element
+            if state == SubGroupTCTestID or state == SubGroupTCTestIdDetails:
+                details = stripDetails(details)
+                tcInfo = TCDocInformation(testId, scope, group, subgroup, subgroupdescrip, subgroupinstruct, subfeature, subgroupexpected, subgroupprecondition, details)
+                #tcInfo.printTCDoc()
+                #tcInfo.printTCDocAll()
+                tcInfoDic[testId] = tcInfo
+                testId  = ''                                    # reset Test ID
+                details = ''                                    # reset Test ID details
+            testId = match.group(1)                             # save (1./new) Test ID
+            state = SubGroupTCTestID                            # set state to details
+
+        if state == SubGroupTCTestID:
+            match =  re.search(searchItemTestCaseTestIDDetails, line)   # search for TestId details: e.g.: ... Widget being tested
+            if match != None:
+                details = details + match.group(1)                      # copy content without the beginning '... '
+                state = SubGroupTCTestIdDetails                         # set state to details
+    # check for last Test ID
+    if state == SubGroupTCTestID or state == SubGroupTCTestIdDetails:
+        details = stripDetails(details)
+        tcInfo = TCDocInformation(testId, scope, group, subgroup, subgroupdescrip, subgroupinstruct, subfeature, subgroupexpected, subgroupprecondition, details)
+        tcInfoDic[testId] = tcInfo
+
+def evalSubGroupContent(subgroupContent, scope, group, subgroup, tcInfoDic):
+
+    # 1. trim/strip the leading and trailing whitespaces of given strings
+    scope    = scope.strip()
+    group    = group.strip()
+    subgroup = subgroup.strip()
+
+    state               = None
+    subFeature          = 1
+    SubGroupDescrip     = 2
+    SubGroupExpect      = 3
+    SubGroupObtain      = 4
+    SubGroupTestcase    = 5
+    SubGroupInstruct    = 6
+    subgroupdescrip     = ''
+    subgroupinstruct    = ''
+    subfeature          = ''
+    subgroupexpected    = ''
+    subgroupprecondition    = ''
+    subgrouptestcase    = ''
+
+    searchSubgroupItemDescrip  = r'^[\.]\s+\[(.*)\]\#+Features\sDescription'
+    searchSubgroupItemInstruct = r'^[\.]\s+\[(.*)\]\#Test\sInstruction\#'
+    searchSubgroupItemExpect   = r'^\s*?[\.]{1}\s+?Expected result.*?'
+    searchSubgroupItemObtained = r'^\s*?[\.]{1}\s+?Obtained result.*?'
+    searchSubgroupItemTestCase = r'^\s*?[\.]{1}\s+?Related Test cases.*?'
+    searchNoContent            = r'^\s*?[\.]{1}.*?'
+
+    lines = subgroupContent.splitlines()
+    for line in lines:
+        # check for now sub group items: Testcase Description; Expected result; Obtained result; Related Test cases
+        match =  re.search(searchSubgroupItemDescrip, line)         # search: . Test Description
+        if match != None:
+            state = SubGroupDescrip
+
+        match =  re.search(searchSubgroupItemInstruct, line)        # search: . Test instructions
+        if match != None:
+            state = SubGroupInstruct
+
+        match =  re.search(searchSubgroupItemExpect, line)          # search: . Expected result
+        if match != None:
+            state = SubGroupExpect
+
+        match =  re.search(searchSubgroupItemObtained, line)        # search: . Obtained result
+        if match != None:
+            state = SubGroupObtain
+
+        match =  re.search(searchSubgroupItemTestCase, line)        # search: . Related Test cases
+        if match != None:
+            state = SubGroupTestcase
+
+        match =  re.search(searchNoContent, line)                   # if line does NOT beginning with '.'
+        if match == None:     
+            if state == subFeature:
+                subfeature = subfeature + line                # copy Test Case Description content
+                # print(subfeature)
+                #                                       # copy content according to the recognized subgroup item
+            elif state == SubGroupDescrip:
+                subgroupdescrip = subgroupdescrip + line                # copy Test Case Description content
+                # print(subgroupdescrip)
+            
+            elif state == SubGroupInstruct:
+                subgroupinstruct = subgroupinstruct + line              # copy Test instructions content
+                # print(subgroupinstruct)
+
+            elif state == SubGroupExpect:
+                subgroupexpected = subgroupexpected + line              # copy Expected Result content
+            elif state == SubGroupObtain:
+                subgroupprecondition = subgroupprecondition + line              # copy Obtained Result content
+            elif state == SubGroupTestcase:
+                subgrouptestcase = subgrouptestcase + line + '\n'     # copy related Test Cases content (content lines)
+        elif state == SubGroupTestcase:
+            subgrouptestcase = subgrouptestcase + line + '\n'         # copy related Test Cases content (header lines)
+    # end: for line in lines: -> sub group is sorted into the different items
+    if len(subgrouptestcase) != 0:
+        writeTestIdInfo(subgrouptestcase, scope, group, subgroup, subgroupdescrip, subgroupinstruct, subfeature, subgroupexpected, subgroupprecondition, tcInfoDic)
+
+def collectTestCaseInformationFromDocs(tcInfoFileNames):
+    # dictionary with class TCDocInformation elements
+    tcInfoDic = { '0' : '' }
+    del tcInfoDic['0']
+
+    state           = None
+    stateSubGroup   = 1
+    subgroupContent = ''
+    scope           = ''
+    group           = ''
+    subgroup        = ''
+    searchScope    = r'^\s*?[=]{2}\s+?([a-zA-Z0-9_\.\s]+).*?'                       # == Widget Test Cases
+    searchGroup    = r'^\s*?[=]{3}\s+?([a-zA-Z0-9_\.\s]+).*?'                       # === AngularSlider Widget 2D
+    searchSubGroup = r'^\s*?[=]{4}\s+?([a-zA-Z0-9_\.\s]+).*?'                       # ==== UI Design
+    searchSubGroupCheck = r'^\s*?[=]{4}\s+?(TC_[A-Z]{1,2}\d\d_\d\d)\[\[(.*)\]\].*?' # ==== TC_W02_01[[TC_W02_01]]
+    searchContent  = r'^\s*?=.*?'                                                   #
+
+    # over Test Case Documentation files
+    for fileName in sorted( tcInfoFileNames ):
+        filename = os.path.basename(fileName)                   # get file name from complete workspace
+        with open(fileName, 'r') as f:
+            for line in f:
+                match =  re.search( searchScope, line )         # search begin of scope; e.g.: == List of Widget Test Cases
+                if match != None:
+                    if state != None:
+                        if state == stateSubGroup:                      # check for already subgroup info is available
+                            evalSubGroupContent(subgroupContent, scope, group, subgroup, tcInfoDic)
+                            subgroupContent = ''                        # reset subgroup information
+                        state = None                                    # reset state if actual line begins with one or more '='
+                    scope = match.group(1)                          # get scope information; e.g.: = List of Widget Test Cases
+                    scope = re.sub('\r\n|\n|\s{2,}', '', scope)     # substitute newline and whitespaces
+
+                match =  re.search( searchGroup, line )         # search begin of group; e.g.: ===  ButtonWidget
+                if match != None:
+                    if state != None:
+                        if state == stateSubGroup:                      # check for already subgroup info is available
+                            evalSubGroupContent(subgroupContent, scope, group, subgroup, tcInfoDic)
+                            subgroupContent = ''                        # reset subgroup information
+                        state = None                                    # reset state if actual line begins with one or more '='
+                    group = match.group(1)                          # get group information; e.g.: ===  ButtonWidget
+                    group = re.sub('\r\n|\n|\s{2,}', '', group)     # substitute newline and whitespaces
+
+                match =  re.search( searchSubGroup, line )      # search begin of subgroup; e.g.: ==== TC_W04_01
+                if match != None:
+                    if state != None:
+                        if state == stateSubGroup:                      # check for already subgroup info is available
+                            evalSubGroupContent(subgroupContent, scope, group, subgroup, tcInfoDic)
+                            subgroupContent = ''                        # reset subgroup information
+                        state = None                                    # reset state if actual line begins with one or more '='
+                    state = stateSubGroup                           # set state to subgroup -> to copy all following line until one line begins with '='
+                    subgroup = match.group(1)                       # get subgroup information; e.g.: ==== TC_W04_01
+                    subgroup = re.sub('\r\n|\n|\s{2,}', '', subgroup)# substitute newline and whitespaces
+                    match =  re.search( searchSubGroupCheck, line ) # check subgroup; e.g.: ==== TC_W04_01
+                    if match != None:
+                        if match.group(1) != match.group(2):            # check if content before and within brackets is equal; TC_W08_01[TC8_01]
+                            subgroup = '%s: Please check the anchor (%s[%s]) in %s' % (subgroup, match.group(1), match.group(2), filename)
+                            print ("        ERROR in subgroup: " + subgroup)
+
+                match =  re.search( searchContent, line )       # search lines without '='; e.g.: . Testcase Description
+                if match == None:
+                    if state == stateSubGroup:
+                        subgroupContent = subgroupContent + line
+        f.close()
+        # check for last info from end of file
+        if state == stateSubGroup:                      # check for already subgroup info is available
+            evalSubGroupContent(subgroupContent, scope, group, subgroup, tcInfoDic)
+            subgroupContent = ''                        # reset subgroup information
+        state = None                                    # reset state if actual line begins with one or more '='
+
+    return tcInfoDic
+
+def createOutputFileCsv(tcDocInfoDic, path):
+    resultFirstLine = 'Count: %s\n' % (TCDocInformation.cnt)
+    resultHeadLine = 'Name of Widget,Test Scope ID,Requirement/ Feature,Short test description,Pre-Condition,Action,Expected Results,Actual Results,Status,Comment,Known issues\n'
+    fileName =os.path.join(path, TCLIST_OT_FILENAME_CSV)
+    f = open( fileName, 'w' )
+    fileContent = resultFirstLine + resultHeadLine
+    for key in sorted( tcDocInfoDic ):
+        docInfo          = tcDocInfoDic.get( key, 0 )
+        resultLine = '%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n'% (docInfo.group, docInfo.testId, docInfo.subfeature, docInfo.subgroupdescrip, docInfo.subgroupinstruct, docInfo.subgroupexpected, ' ', ' ', ' ', ' ')
+        fileContent += resultLine
+    f.write( fileContent )
+    f.close()
