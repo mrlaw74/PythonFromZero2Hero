@@ -1,0 +1,15 @@
+import os
+import catchPattern
+
+TC_LIST_ADOC_NAME           = '*.adoc'
+
+if __name__ == "__main__":
+    currentPath = os.path.dirname(os.path.realpath( __file__ ))
+    # print(currentPath)
+    tcDocFile = catchPattern.findFiles(TC_LIST_ADOC_NAME, currentPath)
+    # print(tcDocFile)
+    content = catchPattern.collectTestCaseInformationFromDocs(tcDocFile, './')
+    print(content)
+
+    # catchPattern.evalSubGroupContent()
+    catchPattern.genCSVFile({}, currentPath)
