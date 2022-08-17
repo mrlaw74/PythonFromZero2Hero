@@ -1,0 +1,655 @@
+#!/usr/bin/env python
+
+#* ***************************************************************************************
+
+# FILE:          CollectTestPlan.py
+
+# AUTHOR:        Mai Minh Tri
+
+# SW-COMPONENT:  HMI-BASE-TEST
+
+# DESCRIPTION:  This script purposes to collect test plan information
+
+# COPYRIGHT:  (c) 2022 Robert Bosch Car Multimedia GmbH
+
+#
+
+#
+
+#***************************************************************************************
+
+import Constants
+
+import re
+
+
+
+CONTENT_TYPE = Constants.ContentType.NONE
+
+PREVIOUS_CONTENT_TYPE = Constants.ContentType.NONE
+
+
+
+class TestPlanInfo:
+
+    def __init__(self, widget, widgetGuideLink, widgetReferenceLink, oplLink, scopes):
+
+        self.widget = widget
+
+        self.widgetGuideLink = widgetGuideLink
+
+        self.widgetReferenceLink = widgetReferenceLink
+
+        self.oplLink = oplLink
+
+        self.scopes = scopes
+
+
+
+class AdocInfo:
+
+    def __init__(self, widget, scopes):
+
+        self.widget = widget
+
+        self.scopes = scopes
+
+
+
+
+
+class DetailTestScope:
+
+    def __init__(self, id, feature, cases):
+
+        self.id = id
+
+        self.features = feature
+
+        self.cases = cases
+
+
+
+
+
+class Cases:
+
+    def __init__(self, id, feature, descriptions, preconditions, actions, expecteds):
+
+        self.id = id
+
+        self.feature = feature
+
+        self.descriptions = descriptions
+
+        self.preconditions = preconditions
+
+        self.actions = actions
+
+        self.expecteds = expecteds
+
+
+
+
+
+class Action:
+
+    def __init__(self, id, steps):
+
+        self.id = id
+
+        self.steps = steps
+
+
+
+class Expected:
+
+    def __init__(self, id, steps):
+
+        self.id = id
+
+        self.steps = steps
+
+
+
+
+
+def getTestPlanInfo():
+
+    print("Start collect information from test plan")
+
+    testPlanInfo = TestPlanInfo("", "", "", "", [])
+
+    scopes = []
+
+
+
+    try:
+
+        with open(Constants.MANUAL_TEST_PLAN_FILE_PATH, 'r') as f:
+
+            for line in f:
+
+                match = None
+
+                # ignore blank line
+
+                if not line.strip():
+
+                    continue
+
+                line = line.strip()
+
+                match = re.search(Constants.Patterns.searchWidget, line)
+
+                if match is not None:
+
+                    testPlanInfo.widget = match.group(1)
+
+                    continue
+
+                match = re.search(Constants.Patterns.searchWidgetGuideLink, line)
+
+                if match is not None:
+
+                    testPlanInfo.widgetGuideLink = match.group(1)
+
+                    continue
+
+                match = re.search(Constants.Patterns.searchWidgetReferenceLink, line)
+
+                if match is not None:
+
+                    testPlanInfo.widgetReferenceLink = match.group(1)
+
+                    continue
+
+                match = re.search(Constants.Patterns.searchOplLink, line)
+
+                if match is not None:
+
+                    testPlanInfo.oplLink = match.group(1)
+
+                    continue
+
+                match = getContentTypeLineText(line)
+
+                if CONTENT_TYPE is Constants.ContentType.DETAIL_TEST_SCOPE:
+
+                    scopes = getDetailScope(scopes, match)
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.FEATURE_CASE:
+
+                    scopes = getFeatureCases(scopes, match)
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.TEXT_LINE:
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.FEATURE_CASE\
+
+                    or PREVIOUS_CONTENT_TYPE is Constants.ContentType.DESCRIPTION:
+
+                        scopes = getDescription(scopes, match)
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.PRECONDITION:
+
+                        scopes = getPrecondition(scopes, match.group(0))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+                        scopes = getAction(scopes, match.group(0))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+                        scopes = getExpected(scopes, match.group(0))
+
+                        continue
+
+                if CONTENT_TYPE is Constants.ContentType.PRECONDITION:
+
+                    scopes = getPrecondition(scopes, match.group(2))
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.REACH_SCENE:
+
+                    scopes = getPrecondition(scopes, match.group(1))
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.TTFIS_COMMAND:
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.PRECONDITION:
+
+                        scopes = getPrecondition(scopes, match.group(1))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+                        scopes = getAction(scopes, match.group(1))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+                        scopes = getExpected(scopes, match.group(1))
+
+                        continue
+
+                if CONTENT_TYPE is Constants.ContentType.ACTION:
+
+                    scopes = getAction(scopes, match)
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+                    scopes = getExpected(scopes, match)
+
+                    continue
+
+            f.close()
+
+            testPlanInfo.scopes = scopes
+
+            print("Finished collecting")
+
+    except (FileNotFoundError):
+
+        print("File not found in", Constants.MANUAL_TEST_PLAN_FILE_PATH)
+
+    return testPlanInfo
+
+
+
+def getAdocInfo():
+
+    print("Start collect information from Adoc")
+
+    Adoc = AdocInfo("", [])
+
+    scopes = []
+
+
+
+    try:
+
+        # print(Constants.MANUAL_ADOC_FILE_PATH)
+
+        with open('C:\\vmshare\\FinalManual\\manualTestingScript\\manual_script\\Demo Templates\\Manual.adoc', 'r') as f:
+
+            for line in f:
+
+                if line == '+\n':
+
+                    continue
+
+                match = None
+
+                # ignore blank line
+
+                if not line.strip():
+
+                    continue
+
+                line = line.strip()
+
+                match = re.search(Constants.Patterns.searchGroup, line)
+
+                if match is not None:
+
+                    Adoc.widget = match.group(1)
+
+                    continue
+
+
+
+                match = getContentTypeLineText1(line)
+
+                if CONTENT_TYPE is Constants.ContentType.DETAIL_TEST_SCOPE:
+
+                    scopes = getDetailScope(scopes, match)
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.FEATURE_CASE:
+
+                    scopes = getFeatureCases1(scopes, match)
+
+                    continue
+
+            f.close()
+
+            Adoc.scopes = scopes
+
+            print("Finished collecting")
+
+    except (FileNotFoundError):
+
+        print("File not found in", Constants.MANUAL_TEST_PLAN_FILE_PATH)
+
+    return Adoc
+
+
+
+
+
+def getDetailScope(scopes, patternMatch):
+
+    print("Collect detail test scope:", patternMatch.group(1))
+
+    global PREVIOUS_CONTENT_TYPE
+
+    detailTestScope = DetailTestScope(patternMatch.group(1), feature="", cases=[])
+
+    scopes.append(detailTestScope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.DETAIL_TEST_SCOPE
+
+    return scopes
+
+
+
+
+
+def getFeatureCases(scopes, patternMatch):
+
+    global PREVIOUS_CONTENT_TYPE
+
+    scope = scopes.pop()
+
+    case = Cases(patternMatch.group(1), patternMatch.group(2), [], [], [], [])
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+    return scopes
+
+
+
+def getFeatureCases1(scopes, patternMatch):
+
+    global PREVIOUS_CONTENT_TYPE
+
+    scope = scopes.pop()
+
+    case = Cases('', patternMatch.group(1), [], [], [], [])
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+    return scopes
+
+
+
+
+
+def getDescription(scopes, match):
+
+    global PREVIOUS_CONTENT_TYPE
+
+    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.DESCRIPTION:
+
+        PREVIOUS_CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+        return getDescription(scopes, match)
+
+
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+    case.descriptions.append(match)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.DESCRIPTION
+
+    return scopes
+
+
+
+
+
+def getPrecondition(scopes, match):
+
+    global PREVIOUS_CONTENT_TYPE
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+    case.preconditions.append(match)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.PRECONDITION
+
+    return scopes
+
+
+
+
+
+def getAction(scopes, patternMatch):
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+
+
+    global PREVIOUS_CONTENT_TYPE
+
+    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.PRECONDITION\
+
+    or PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+        action = Action(patternMatch.group(1), [patternMatch.group(3)])
+
+        PREVIOUS_CONTENT_TYPE = Constants.ContentType.ACTION
+
+    elif PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+        action = case.actions.pop()
+
+        action.steps.append(patternMatch)
+
+
+
+    case.actions.append(action)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    return scopes
+
+
+
+
+
+def getExpected(scopes, patternMatch):
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+    global PREVIOUS_CONTENT_TYPE
+
+    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+        expected = Expected(patternMatch.group(1), [patternMatch.group(3)])
+
+        PREVIOUS_CONTENT_TYPE =  Constants.ContentType.EXPECTED
+
+    elif PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+        expected = case.expecteds.pop()
+
+        expected.steps.append(patternMatch)
+
+
+
+    case.expecteds.append(expected)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    return scopes
+
+
+
+
+
+def getContentTypeLineText(line):
+
+    match = re.search(Constants.Patterns.searchDetailTestScope, line)
+
+    global CONTENT_TYPE
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.DETAIL_TEST_SCOPE
+
+        return match
+
+    match = re.search(Constants.Patterns.searchFeatureCases, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+        return match
+
+    match = re.search(Constants.Patterns.searchPrecondition, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.PRECONDITION
+
+        return match
+
+    match = re.search(Constants.Patterns.searchReachScene, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.REACH_SCENE
+
+        return match
+
+    match = re.search(Constants.Patterns.searchTTFISCommand, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.TTFIS_COMMAND
+
+        return match
+
+    match = re.search(Constants.Patterns.searchAction, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.ACTION
+
+        return match
+
+    match = re.search(Constants.Patterns.searchExpected, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.EXPECTED
+
+        return match
+
+
+
+    match = re.search(line, line)
+
+    CONTENT_TYPE = Constants.ContentType.TEXT_LINE
+
+    return match
+
+
+
+def getContentTypeLineText1(line):
+
+    match = re.search(Constants.Patterns.searchTestScope, line)
+
+    global CONTENT_TYPE
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.DETAIL_TEST_SCOPE
+
+        return match
+
+    match = re.search(Constants.Patterns.searchFeature, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+        return match
+
+
+
+    match = re.search(Constants.Patterns.searchPreCondition1, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.PRECONDITION
+
+        return match
+
+
+
+    match = re.search(Constants.Patterns.searchAction1, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.ACTION
+
+        return match
+
+    match = re.search(Constants.Patterns.searchExpected1, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.EXPECTED
+
+        return match
+
+
+
+    match = re.search(line, line)
+
+    CONTENT_TYPE = Constants.ContentType.TEXT_LINE
+
+    return match
+
+
+
+a = getAdocInfo()
