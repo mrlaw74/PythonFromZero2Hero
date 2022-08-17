@@ -653,3 +653,122 @@ def getContentTypeLineText1(line):
 
 
 a = getAdocInfo()
+
+
+
+Constant
+#!/usr/bin/env python
+
+#* ***************************************************************************************
+
+# FILE:          Constants.py
+
+# AUTHOR:        Mai Minh Tri
+
+# SW-COMPONENT:  HMI-BASE-TEST
+
+# DESCRIPTION:  This script purposes to store constant variables
+
+# COPYRIGHT:  (c) 2022 Robert Bosch Car Multimedia GmbH
+
+#
+
+#
+
+#***************************************************************************************
+
+
+
+from enum import Enum, unique
+
+
+
+MANUAL_TEST_PLAN_FILE_PATH = ""
+
+MANUAL_ADOC_FILE_PATH = ""
+
+
+
+@unique
+
+class ContentType(Enum):
+
+    DETAIL_TEST_SCOPE   = 0
+
+    FEATURE_CASE        = 1
+
+    CHILD_TEST_SCOPE    = 2
+
+    DESCRIPTION         = 3
+
+    PRECONDITION        = 4
+
+    REACH_SCENE         = 5
+
+    TTFIS_COMMAND       = 6
+
+    ACTION              = 7
+
+    EXPECTED            = 8
+
+    TEXT_LINE           = 9
+
+    NONE                = 10
+
+
+
+class Patterns():
+
+    searchWidget                = r'WidgetName:\s*(\w+).*'
+
+    searchWidgetGuideLink       = r'HMIBaseWidgetGuide:\s*(.+)'
+
+    searchWidgetReferenceLink   = r'WidgetReference:\s*(.+)'
+
+    searchOplLink               = r'OPL:\s*(.+)'
+
+    searchTestScopes            = r'(Test Scopes|Test Scope|TestScopes|TestScope)(\s+|:)'
+
+    searchTestCases             = r'(\w+):\W+(TC_W\d+.\d+)'
+
+    searchDetailTestScope       = r'Test Case details for Scope (TC_\w+).*'
+
+    searchFeatureCases          = r'(Nr\W+\d+)\W+Feature:\W+(\w+)'
+
+    searchPrecondition          = r'(Pre-condition):\s+(.+)'
+
+    searchTTFISCommand          = r'TTFisCommand:\s+(.+)'
+
+    searchReachScene            = r'Reach scene:\s(.+)'
+
+    searchAction                = r'(Action\s+\d+)(:|\s+)\s+(.+)'
+
+    searchExpected              = r'(Expected\s+\d+)(:|\s+)\s+(.+)'
+
+
+
+    # searchDocName  = r'(UserGuide\HMIBaseTest\ListOfTestCases\)([a-zA-Z0-9_].adoc))'
+
+    searchScope                 = r'^\s*?[=]{2}\s+?([a-zA-Z0-9_\.\s]+ (.*)).*?'                      # == Manual Widget Test cases - Widget 2D
+
+    searchGroup                 = r'^\s*?[=]{3}\s+([a-zA-Z0-9]+.*).*?'                           # === AnimationWidget2D
+
+    # searchSubGroup = r'^\s*?[=]{4}\s+?([a-zA-Z0-9_\.\s]+).*?'                         # ==== UI Design
+
+    searchTestScope             = r'^\s*?[=]{4}\s+?(TC_[A-Z]{1,2}\d\d_\d\d).*?'         # ==== TC_W01_01
+
+    searchChildTestScope        = r'^\s*?[\.]{2}\s+?(TC_[A-Z]{1,2}\d\d_\d\d_\d\d).*?'          # ==== TC_W01_01_01[[TC_W01_01_01]]
+
+    searchFeature               = r'Feature:\s*(.+)'                                     # Feature: 
+
+    searchFeatureDescrip        = r'.\s\[big\sred\]\#*(.+)'                                   # Feature description and Related
+
+    searchPreCondition1         = r'^\s*?[\.]{3}\s.+?(Pre-condition#).*?'                       # Pre Condition
+
+    searchAction1               = r'^\s*?[\.]{3}\s.+?(Action\s).*?'                                   # Action
+
+    searchExpected1             = r'^\s*?[\.]{3}\s.+?(Expected\s).*?'                               # Expected
+
+    # searchContent  = r'^\s*?=.*?'                                                     #
+
+    searchNoContent             = r'^\s*?[\.]{1}.*?'
