@@ -1,0 +1,1685 @@
+Manual.adoc
+== Manual Widget Test cases
+
+=== Widget 2D
+
+This document is for writing manual test cases.
+
+=== AnimationWidget2D
+
+Widget Guide:
+
+https://rbcm-jen-hmib.hi.de.bosch.com:8443/job/nb_w_cmdgen3_userdocu_copy/ws/HMIBaseWidgetGuide/HMIBaseWidgetGuide-CGI.html#_solidcoloreffect_2d_anchor_id_widget2d_solidcoloreffect_xreflabel_widget2d_solidcoloreffect
+
+Widget Referrence:
+
+https://rbcm-jen-hmib.hi.de.bosch.com:8443/job/nb_w_cmdgen3_userdocu_copy/ws/HMIBaseWidgetGuide/WidgetReference.html#_solidcoloreffectwidget2d_asciidoc_br
+
+OPL:
+
+https://rb-alm-20-p.de.bosch.com/ccm/web/projects/CM%20Distribution%20(CMD)#action=com.ibm.team.workitem.viewWorkItem&id=1423184
+
+==== TC_W01_01
+
+Feature: Scale
+
+. [big red]#Related Test cases#
+
+.. TC_W01_01_01[[TC_W01_01_01]]
+
+... [red]#Feature Description#
++
+Test feature 'Scale' from the widget 'AnimationWidget2D'.
++
+Short description for feature 'Scale'
+
+... [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+... [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+.. TC_W01_01_02[[TC_W01_01_02]]
+
+... [red]#Feature Description#
++
+Test feature 'Scale' from the widget 'AnimationWidget2D'.
++
+Short description for feature 'Scale'
+
+... [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+... [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+==== TC_W02_01
+
+Feature: Alpha
+
+. [big red]#Related Test cases#
+
+.. TC_W02_01_01[[TC_W02_01_01]]
+
+... [red]#Feature Description#
++
+Test feature Alpha from the widget 'AnimationWidget2D'.
++
+Short description for feature Alpha
+
+... [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+... [red]#Action 1#
++
+Click on the Alpha button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+==== TC_W03_01
+
+Feature: Position
+
+. [big red]#Related Test cases#
+
+.. TC_W03_01_01[[TC_W03_01_01]]
+
+... [red]#Feature Description#
++
+Test feature Position from the widget 'AnimationWidget2D'.
++
+Short description for feature Position
+
+... [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+... [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+.. TC_W03_01_02[[TC_W03_01_02]]
+
+... [red]#Feature Description#
++
+Test feature Position from the widget 'AnimationWidget2D'.
++
+Short description for feature Position
+
+... [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+... [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+.. TC_W03_01_03[[TC_W03_01_03]]
+
+... [red]#Feature Description#
++
+Test feature Position from the widget 'AnimationWidget2D'.
++
+Short description for feature Position
+
+... [red]#Pre-condition#
++
+Reset TestApp04
++
+APPHMI_TEST_04_ResetAll Trace
++
+Activate the Animation Widget scene by below mentioned steps
++
+TestApp04->Widget Groups->Animation Widget->Animation/Animation list
++
+APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
++
+Set the toggle direction property to either 0 through TTFS.
++
+HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+... [red]#Action 1#
++
+Click on the Scale button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Click once again on the button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 1#
++
+Observe the scene for ScrollCharCount=2
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Observe the scene for ScrollCharCount=3
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Action 2#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 2#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+TTFisCommand:
+
+... [red]#Action 3#
++
+Swipe through the Coverflow List.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
++
+Rotate the image after the swipe.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+... [red]#Expected 3#
++
+The text will scroll when it is dragged.
++
+HMI_Get_WidgetInstanceInfo ${TestWidget}
++
+The Alpha button should shows the fading feature upon clicking button.
++
+HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+TEstPlam
+------------------------------------
+
+Author: Nguyen Van A
+
+GroupName: Animation
+
+BaseGroup: Widget
+
+TestAppType: widget01
+
+WidgetName: AnimationWidget2D
+
+--------------------------------------
+
+
+
+Link of Documents
+
+- HMIBaseWidgetGuide: https://rbcm-jen-hmib.hi.de.bosch.com:8443/job/nb_w_cmdgen3_userdocu_copy/ws/HMIBaseWidgetGuide/HMIBaseWidgetGuide-CGI.html#_solidcoloreffect_2d_anchor_id_widget2d_solidcoloreffect_xreflabel_widget2d_solidcoloreffect
+
+- WidgetReference: https://rbcm-jen-hmib.hi.de.bosch.com:8443/job/nb_w_cmdgen3_userdocu_copy/ws/HMIBaseWidgetGuide/WidgetReference.html#_solidcoloreffectwidget2d_asciidoc_br
+
+- OPL: https://rb-alm-20-p.de.bosch.com/ccm/web/projects/CM%20Distribution%20(CMD)#action=com.ibm.team.workitem.viewWorkItem&id=1423184
+
+
+
+Summary of test cases:
+
+We test feature: Scale, Alpha, Position.
+
+
+
+We don't test features:
+
+- SpeedFactor: No test needed for this property because this property has not been fully developed.
+
+- ToggleDirection: No test needed for this property because this property has not been fully developed.
+
+- RepeatTimes: No test needed for this property because this property has not been fully developed.
+
+
+
+Test Scopes:
+
+- Scale:    TC_W01_01
+
+- Alpha:    TC_W02_01
+
+- Position: TC_W03_01
+
+
+
+Test Case details for Scope TC_W01_01
+
+    Nr.:01 -> Feature: Scale
+
+              Test feature 'Scale' from the widget 'AnimationWidget2D'.
+
+              Short description for feature 'Scale'
+
+
+
+    - Pre-condition: Reset TestApp04
+
+                     TTFisCommand: APPHMI_TEST_04_ResetAll Trace
+
+                     Reach scene: Activate the Animation Widget scene by below mentioned steps
+
+                                  TestApp04->Widget Groups->Animation Widget->Animation/Animation list
+
+                     TTFisCommand: APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
+
+                     Set the toggle direction property to either 0 through TTFS.
+
+                     TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+
+
+    - Action 1: Click on the Scale button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Click once again on the button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 1: Observe the scene for ScrollCharCount=2
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                  Observe the scene for ScrollCharCount=3
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Action 2: Swipe through the Coverflow List.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Rotate the image after the swipe.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 2: The text will scroll when it is dragged.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+                  The Alpha button should shows the fading feature upon clicking button.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+
+
+    Nr.:02 -> Feature: Scale
+
+              Test feature 'Scale' from the widget 'AnimationWidget2D'.
+
+              Short description for feature 'Scale'
+
+
+
+    - Pre-condition: Reset TestApp04
+
+                     TTFisCommand: APPHMI_TEST_04_ResetAll Trace
+
+                     Reach scene: Activate the Animation Widget scene by below mentioned steps
+
+                                  TestApp04->Widget Groups->Animation Widget->Animation/Animation list
+
+                     TTFisCommand: APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
+
+                     Set the toggle direction property to either 0 through TTFS.
+
+                     TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+
+
+    - Action 1: Click on the Scale button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Click once again on the button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 1: Observe the scene for ScrollCharCount=2
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                  Observe the scene for ScrollCharCount=3
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Action 2: Swipe through the Coverflow List.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Rotate the image after the swipe.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 2: The text will scroll when it is dragged.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+                  The Alpha button should shows the fading feature upon clicking button.
+
+                  TTFisCommand:
+
+
+
+Test Case details for Scope TC_W02_01
+
+    Nr.:01 -> Feature: Alpha
+
+              Test feature Alpha from the widget 'AnimationWidget2D'.
+
+              Short description for feature Alpha
+
+
+
+    - Pre-condition: Reset TestApp04
+
+                     TTFisCommand: APPHMI_TEST_04_ResetAll Trace
+
+                     Reach scene: Activate the Animation Widget scene by below mentioned steps
+
+                                  TestApp04->Widget Groups->Animation Widget->Animation/Animation list
+
+                     TTFisCommand: APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
+
+                     Set the toggle direction property to either 0 through TTFS.
+
+                     TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+
+
+    - Action 1: Click on the Alpha button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Click once again on the button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 1: Observe the scene for ScrollCharCount=2
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                  Observe the scene for ScrollCharCount=3
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Action 2: Swipe through the Coverflow List.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Rotate the image after the swipe.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 2: The text will scroll when it is dragged.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+                  The Alpha button should shows the fading feature upon clicking button.
+
+                  TTFisCommand:
+
+
+
+Test Case details for Scope TC_W03_01
+
+    Nr.:01 -> Feature: Position
+
+              Test feature Position from the widget 'AnimationWidget2D'.
+
+              Short description for feature Position
+
+
+
+    - Pre-condition: Reset TestApp04
+
+                     TTFisCommand: APPHMI_TEST_04_ResetAll Trace
+
+                     Reach scene: Activate the Animation Widget scene by below mentioned steps
+
+                                  TestApp04->Widget Groups->Animation Widget->Animation/Animation list
+
+                     TTFisCommand: APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
+
+                     Set the toggle direction property to either 0 through TTFS.
+
+                     TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+
+
+    - Action 1: Click on the Scale button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Click once again on the button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 1: Observe the scene for ScrollCharCount=2
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                  Observe the scene for ScrollCharCount=3
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Action 2: Swipe through the Coverflow List.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Rotate the image after the swipe.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 2: The text will scroll when it is dragged.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+                  The Alpha button should shows the fading feature upon clicking button.
+
+                  TTFisCommand:
+
+
+
+    Nr.:02 -> Feature: Position
+
+              Test feature Position from the widget 'AnimationWidget2D'.
+
+              Short description for feature Position
+
+
+
+    - Pre-condition: Reset TestApp04
+
+                     TTFisCommand: APPHMI_TEST_04_ResetAll Trace
+
+                     Reach scene: Activate the Animation Widget scene by below mentioned steps
+
+                                  TestApp04->Widget Groups->Animation Widget->Animation/Animation list
+
+                     TTFisCommand: APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
+
+                     Set the toggle direction property to either 0 through TTFS.
+
+                     TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+
+
+    - Action 1: Click on the Scale button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Click once again on the button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 1: Observe the scene for ScrollCharCount=2
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                  Observe the scene for ScrollCharCount=3
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Action 2: Swipe through the Coverflow List.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Rotate the image after the swipe.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 2: The text will scroll when it is dragged.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+                  The Alpha button should shows the fading feature upon clicking button.
+
+                  TTFisCommand:
+
+    
+
+    Nr.:03 -> Feature: Position
+
+              Test feature Position from the widget 'AnimationWidget2D'.
+
+              Short description for feature Position
+
+
+
+    - Pre-condition: Reset TestApp04
+
+                     TTFisCommand: APPHMI_TEST_04_ResetAll Trace
+
+                     Reach scene: Activate the Animation Widget scene by below mentioned steps
+
+                                  TestApp04->Widget Groups->Animation Widget->Animation/Animation list
+
+                     TTFisCommand: APPHMI_TEST_04_ActivateScene TestApp04#Widget Groups#Animation Widget#Animation#Animation list
+
+                     Set the toggle direction property to either 0 through TTFS.
+
+                     TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ToggleDirection 0
+
+
+
+    - Action 1: Click on the Scale button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Click once again on the button.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 1: Observe the scene for ScrollCharCount=2
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                  Observe the scene for ScrollCharCount=3
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Action 2: Swipe through the Coverflow List.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Rotate the image after the swipe.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 2: The text will scroll when it is dragged.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+                  The Alpha button should shows the fading feature upon clicking button.
+
+                  TTFisCommand:
+
+
+
+    - Action 3: Swipe through the Coverflow List.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+                Rotate the image after the swipe.
+
+                TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+
+
+
+    - Expected 3: The text will scroll when it is dragged.
+
+                  TTFisCommand: HMI_Get_WidgetInstanceInfo ${TestWidget}
+
+                  The Alpha button should shows the fading feature upon clicking button.
+
+                  TTFisCommand: HMI_Set_WidgetProperty ${TestWidget} ${PropertyName} ${PropertyValue}
+collec.py
+#!/usr/bin/env python
+
+#* ***************************************************************************************
+
+# FILE:          CollectTestPlan.py
+
+# AUTHOR:        Mai Minh Tri
+
+# SW-COMPONENT:  HMI-BASE-TEST
+
+# DESCRIPTION:  This script purposes to collect test plan information
+
+# COPYRIGHT:  (c) 2022 Robert Bosch Car Multimedia GmbH
+
+#
+
+#
+
+#***************************************************************************************
+
+import Constants
+
+import re
+
+
+
+CONTENT_TYPE = Constants.ContentType.NONE
+
+PREVIOUS_CONTENT_TYPE = Constants.ContentType.NONE
+
+
+
+class TestPlanInfo:
+
+    def __init__(self, widget, widgetGuideLink, widgetReferenceLink, oplLink, scopes):
+
+        self.widget = widget
+
+        self.widgetGuideLink = widgetGuideLink
+
+        self.widgetReferenceLink = widgetReferenceLink
+
+        self.oplLink = oplLink
+
+        self.scopes = scopes
+
+
+
+
+
+class DetailTestScope:
+
+    def __init__(self, id, feature, cases):
+
+        self.id = id
+
+        self.features = feature
+
+        self.cases = cases
+
+
+
+
+
+class Case:
+
+    def __init__(self, id, feature, descriptions, preconditions, actions, expecteds):
+
+        self.id = id
+
+        self.feature = feature
+
+        self.descriptions = descriptions
+
+        self.preconditions = preconditions
+
+        self.actions = actions
+
+        self.expecteds = expecteds
+
+
+
+
+
+class Action:
+
+    def __init__(self, id, steps):
+
+        self.id = id
+
+        self.steps = steps
+
+
+
+class Expected:
+
+    def __init__(self, id, steps):
+
+        self.id = id
+
+        self.steps = steps
+
+
+
+
+
+def getTestPlanInfo():
+
+    print("Start collect information from test plan")
+
+    testPlanInfo = TestPlanInfo("", "", "", "", [])
+
+    scopes = []
+
+
+
+    try:
+
+        with open(Constants.MANUAL_TEST_PLAN_FILE_PATH, 'r') as f:
+
+            for line in f:
+
+                match = None
+
+                # ignore blank line
+
+                if not line.strip():
+
+                    continue
+
+                line = line.strip()
+
+                match = re.search(Constants.Patterns.searchWidget, line)
+
+                if match is not None:
+
+                    testPlanInfo.widget = match.group(1)
+
+                    continue
+
+                match = re.search(Constants.Patterns.searchWidgetGuideLink, line)
+
+                if match is not None:
+
+                    testPlanInfo.widgetGuideLink = match.group(1)
+
+                    continue
+
+                match = re.search(Constants.Patterns.searchWidgetReferenceLink, line)
+
+                if match is not None:
+
+                    testPlanInfo.widgetReferenceLink = match.group(1)
+
+                    continue
+
+                match = re.search(Constants.Patterns.searchOplLink, line)
+
+                if match is not None:
+
+                    testPlanInfo.oplLink = match.group(1)
+
+                    continue
+
+                match = getContentTypeLineText(line)
+
+                if CONTENT_TYPE is Constants.ContentType.DETAIL_TEST_SCOPE:
+
+                    scopes = getDetailScope(scopes, match)
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.FEATURE_CASE:
+
+                    scopes = getFeatureCases(scopes, match)
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.TEXT_LINE:
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.FEATURE_CASE\
+
+                    or PREVIOUS_CONTENT_TYPE is Constants.ContentType.DESCRIPTION:
+
+                        scopes = getDescription(scopes, match)
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.PRECONDITION:
+
+                        scopes = getPrecondition(scopes, match.group(0))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+                        scopes = getAction(scopes, match.group(0))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+                        scopes = getExpected(scopes, match.group(0))
+
+                        continue
+
+                if CONTENT_TYPE is Constants.ContentType.PRECONDITION:
+
+                    scopes = getPrecondition(scopes, match.group(2))
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.REACH_SCENE:
+
+                    scopes = getPrecondition(scopes, match.group(1))
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.TTFIS_COMMAND:
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.PRECONDITION:
+
+                        scopes = getPrecondition(scopes, match.group(1))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+                        scopes = getAction(scopes, match.group(1))
+
+                        continue
+
+                    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+                        scopes = getExpected(scopes, match.group(1))
+
+                        continue
+
+                if CONTENT_TYPE is Constants.ContentType.ACTION:
+
+                    scopes = getAction(scopes, match)
+
+                    continue
+
+                if CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+                    scopes = getExpected(scopes, match)
+
+                    continue
+
+            f.close()
+
+            testPlanInfo.scopes = scopes
+
+            print("Finished collecting")
+
+    except (FileNotFoundError):
+
+        print("File not found in", Constants.MANUAL_TEST_PLAN_FILE_PATH)
+
+    return testPlanInfo
+
+
+
+def getDetailScope(scopes, patternMatch):
+
+    print("Collect detail test scope:", patternMatch.group(1))
+
+    global PREVIOUS_CONTENT_TYPE
+
+    detailTestScope = DetailTestScope(patternMatch.group(1), feature="", cases=[])
+
+    scopes.append(detailTestScope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.DETAIL_TEST_SCOPE
+
+    return scopes
+
+
+
+
+
+def getFeatureCases(scopes, patternMatch):
+
+    global PREVIOUS_CONTENT_TYPE
+
+    scope = scopes.pop()
+
+    case = Case(patternMatch.group(1), patternMatch.group(2), [], [], [], [])
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+    return scopes
+
+
+
+
+
+def getDescription(scopes, match):
+
+    global PREVIOUS_CONTENT_TYPE
+
+    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.DESCRIPTION:
+
+        PREVIOUS_CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+        return getDescription(scopes, match)
+
+
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+    case.descriptions.append(match)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.DESCRIPTION
+
+    return scopes
+
+
+
+
+
+def getPrecondition(scopes, match):
+
+    global PREVIOUS_CONTENT_TYPE
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+    case.preconditions.append(match)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    PREVIOUS_CONTENT_TYPE = Constants.ContentType.PRECONDITION
+
+    return scopes
+
+
+
+
+
+def getAction(scopes, patternMatch):
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+
+
+    global PREVIOUS_CONTENT_TYPE
+
+    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.PRECONDITION\
+
+    or PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+        action = Action(patternMatch.group(1), [patternMatch.group(3)])
+
+        PREVIOUS_CONTENT_TYPE = Constants.ContentType.ACTION
+
+    elif PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+        action = case.actions.pop()
+
+        action.steps.append(patternMatch)
+
+
+
+    case.actions.append(action)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    return scopes
+
+
+
+
+
+def getExpected(scopes, patternMatch):
+
+    scope = scopes.pop()
+
+    case = scope.cases.pop()
+
+    global PREVIOUS_CONTENT_TYPE
+
+    if PREVIOUS_CONTENT_TYPE is Constants.ContentType.ACTION:
+
+        expected = Expected(patternMatch.group(1), [patternMatch.group(3)])
+
+        PREVIOUS_CONTENT_TYPE =  Constants.ContentType.EXPECTED
+
+    elif PREVIOUS_CONTENT_TYPE is Constants.ContentType.EXPECTED:
+
+        expected = case.expecteds.pop()
+
+        expected.steps.append(patternMatch)
+
+
+
+    case.expecteds.append(expected)
+
+    scope.cases.append(case)
+
+    scopes.append(scope)
+
+    return scopes
+
+
+
+
+
+def getContentTypeLineText(line):
+
+    match = re.search(Constants.Patterns.searchDetailTestScope, line)
+
+    global CONTENT_TYPE
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.DETAIL_TEST_SCOPE
+
+        return match
+
+    match = re.search(Constants.Patterns.searchFeatureCases, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.FEATURE_CASE
+
+        return match
+
+    match = re.search(Constants.Patterns.searchPrecondition, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.PRECONDITION
+
+        return match
+
+    match = re.search(Constants.Patterns.searchReachScene, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.REACH_SCENE
+
+        return match
+
+    match = re.search(Constants.Patterns.searchTTFISCommand, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.TTFIS_COMMAND
+
+        return match
+
+    match = re.search(Constants.Patterns.searchAction, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.ACTION
+
+        return match
+
+    match = re.search(Constants.Patterns.searchExpected, line)
+
+    if match is not None:
+
+        CONTENT_TYPE = Constants.ContentType.EXPECTED
+
+        return match
+
+
+
+    match = re.search(line, line)
+
+    CONTENT_TYPE = Constants.ContentType.TEXT_LINE
+
+    return match
+config:
+MANUAL_TEST_PLAN_FILE_PATH = path\Widget_xxx_TestPlan.txt
+
+MANUAL_ADOC_FILE_PATH = path\ai_hmi_base\_doc\UserGuide\HMIBaseTest\ManualTestCases\Manual.adoc
+Constan:
+#!/usr/bin/env python
+
+#* ***************************************************************************************
+
+# FILE:          Constants.py
+
+# AUTHOR:        Mai Minh Tri
+
+# SW-COMPONENT:  HMI-BASE-TEST
+
+# DESCRIPTION:  This script purposes to store constant variables
+
+# COPYRIGHT:  (c) 2022 Robert Bosch Car Multimedia GmbH
+
+#
+
+#
+
+#***************************************************************************************
+
+
+
+from enum import Enum, unique
+
+
+
+MANUAL_TEST_PLAN_FILE_PATH = ""
+
+MANUAL_ADOC_FILE_PATH = ""
+
+
+
+@unique
+
+class ContentType(Enum):
+
+    DETAIL_TEST_SCOPE = 0
+
+    FEATURE_CASE = 1
+
+    DESCRIPTION = 2
+
+    PRECONDITION = 3
+
+    REACH_SCENE = 4
+
+    TTFIS_COMMAND = 5
+
+    ACTION = 6
+
+    EXPECTED = 7
+
+    TEXT_LINE = 8
+
+    NONE = 9
+
+
+
+class Patterns():
+
+    searchWidget = r'WidgetName:\s*(\w+).*'
+
+    searchWidgetGuideLink = r'HMIBaseWidgetGuide:\s*(.+)'
+
+    searchWidgetReferenceLink = r'WidgetReference:\s*(.+)'
+
+    searchOplLink = r'OPL:\s*(.+)'
+
+    searchTestScopes = r'(Test Scopes|Test Scope|TestScopes|TestScope)(\s+|:)'
+
+    searchTestCases = r'(\w+):\W+(TC_W\d+.\d+)'
+
+    searchDetailTestScope = r'Test Case details for Scope (TC_\w+).*'
+
+    searchFeatureCases = r'(Nr\W+\d+)\W+Feature:\W+(\w+)'
+
+    searchPrecondition = r'(Pre-condition):\s+(.+)'
+
+    searchTTFISCommand = r'TTFisCommand:\s+(.+)'
+
+    searchReachScene = r'Reach scene:\s(.+)'
+
+    searchAction = r'(Action\s+\d+)(:|\s+)\s+(.+)'
+
+    searchExpected = r'(Expected\s+\d+)(:|\s+)\s+(.+)'
+Gene
+#!/usr/bin/env python
+#* ***************************************************************************************
+# FILE:          GenerateContent.py
+# AUTHOR:        Mai Minh Tri
+# SW-COMPONENT:  HMI-BASE-TEST
+# DESCRIPTION:  This script purposes to generate the content for Manual.adoc File
+# COPYRIGHT:  (c) 2022 Robert Bosch Car Multimedia GmbH
+#
+#
+#***************************************************************************************
+from locale import format_string
+import Constants
+import CollectTestPlan
+
+def genManualDoc():
+    content = []
+    isDuplicateContent = False
+    try:
+        testPlan = CollectTestPlan.getTestPlanInfo()
+        with open(Constants.MANUAL_ADOC_FILE_PATH, 'a+') as f:
+            isDuplicateContent = verifyManualDocDuplicateContent(testPlan)
+            # verify the manual.adoc does not have this widget
+            if isDuplicateContent is True:
+                print(format_string("Document already have %s. Please check again!", testPlan.widget))
+                return
+
+            print("Start parsing test plan to Manual.adoc")
+            content = genCommonInfo(testPlan, content)
+            content = genDetailScopes(testPlan, content)
+            f.writelines(content)
+            print("Parsing finish")
+    except(FileNotFoundError):
+        print("File not found in", Constants.MANUAL_ADOC_FILE_PATH)
+
+
+def genDetailScopes(testPlan, content):
+    try:
+        for scope in testPlan.scopes:
+            content.append(format_string("\n==== %s\n", scope.id))
+            content = genFeatures(scope.cases, content)
+    except (IndexError):
+        print("Test plan does not have any detail scopes. Please check again!")
+    return content
+
+
+def genFeatures(features, content):
+    try:
+        count = 1
+        scopeId = content[len(content)-1]
+        scopeId = format_string("%s_XX", scopeId)
+        scopeId = scopeId.replace("====", "..")
+        content.append(format_string("\nFeature: %s\n", features[0].feature))
+        content.append("\n. [big red]#Related Test cases#\n")
+        for case in features:
+            if count < 10:
+                scopeIdTitle = scopeId.replace("XX", format_string("0%d", count))
+            else:
+                scopeIdTitle = scopeId.replace("XX", format_string("%d", count))
+            scopeIdTitle = scopeIdTitle + format_string("[[%s]]\n", scopeIdTitle.split(' ')[1])
+            content.append(scopeIdTitle)
+            content = genDescriptions(case.descriptions, content)
+            content = genPreconditions(case.preconditions, content)
+            content = genTestInstructions(case.actions, case.expecteds, content)
+            count += 1
+    except (IndexError):
+        print(format_string("Detail scope %s does not any feature cases. Please check again!", scopeId))
+    return content
+
+
+def genPreconditions(preconditions, content):
+    if len(preconditions) == 0:
+        return content
+
+    content.append("\n... [red]#Pre-condition#\n")
+    for precondition in preconditions:
+        content.append(format_string("+\n%s\n", precondition))
+    return content
+
+
+def genTestInstructions(actions, expecteds, content):
+    try:
+        count = len(actions)
+        for i in range(count):
+            content.append(format_string("\n... [red]#%s#\n", actions[i].id))
+            content = genTestInstructionsSteps(actions[i].steps, content)
+            content.append(format_string("\n... [red]#%s#\n", expecteds[i].id))
+            content = genTestInstructionsSteps(expecteds[i].steps, content)
+    except (IndexError):
+        print(format_string("Do not any step in Action/Expected. Please check again!"))
+    return content
+
+
+def genTestInstructionsSteps(steps, content):
+    try:
+        for step in steps:
+            content.append(format_string("+\n%s\n", step))
+    except (IndexError):
+        pass
+    return content
+
+def genDescriptions(descriptions, content):
+    try:
+        content.append("\n... [red]#Feature Description#\n")
+        for description in descriptions:
+            content.append(format_string("+\n%s\n", description.string))
+    except (IndexError):
+        print(format_string("Detail scope %s does not any desciptions. Please check again!"))
+    return content
+
+
+def genCommonInfo(testPlan, content):
+    content.append("\n")
+    content.append(format_string("\n=== %s\n", testPlan.widget))
+    content.append("\nWidget Guide:\n")
+    content.append(format_string("\n%s\n", testPlan.widgetGuideLink))
+    content.append("\nWidget Referrence:\n")
+    content.append(format_string("\n%s\n", testPlan.widgetReferenceLink))
+    content.append("\nOPL:\n")
+    content.append(format_string("\n%s\n", testPlan.oplLink))
+    return content
+
+
+def verifyManualDocDuplicateContent(testPlan):
+    widgetTitle = "=== %s\n"
+    try:
+        widgetTitle = format_string(widgetTitle, testPlan.widget)
+        with open(Constants.MANUAL_ADOC_FILE_PATH, "r") as f:
+            f.readlines().index(widgetTitle)
+    except (ValueError):
+        return False
+    return True
+helper
+#!/usr/bin/env python
+#* ***************************************************************************************
+# FILE:          Helper.py
+# AUTHOR:        Mai Minh Tri
+# SW-COMPONENT:  HMI-BASE-TEST
+# DESCRIPTION:  This script contains support functions
+# COPYRIGHT:  (c) 2022 Robert Bosch Car Multimedia GmbH
+#
+#
+#***************************************************************************************
+import os
+import re
+import Constants
+
+def getConfigure():
+    print("Collect information from configure file")
+    searchTestPlanPath = r'MANUAL_TEST_PLAN_FILE_PATH\s*=\s*(.*)\s*'
+    searchManualDocPath = r'MANUAL_ADOC_FILE_PATH\s*=\s*(.*)\s*'
+
+    try:
+        configureFile = os.getcwd() + os.sep + "Configure.txt"
+
+        with open(configureFile, 'r') as f:
+            for line in f:
+                match = re.search(searchTestPlanPath, line)
+                if match is not None:
+                    Constants.MANUAL_TEST_PLAN_FILE_PATH = match.group(1)
+                match = re.search(searchManualDocPath, line)
+                if match is not None:
+                    Constants.MANUAL_ADOC_FILE_PATH = match.group(1)
+    except(FileNotFoundError):
+        print("File Configure.txt is not found in "  + os.getcwd())
+manualgen
+#!/usr/bin/env python
+
+#* ***************************************************************************************
+
+# FILE:          ManualDocGen.py
+
+# AUTHOR:        Mai Minh Tri
+
+# SW-COMPONENT:  HMI-BASE-TEST
+
+# DESCRIPTION:  This script purposes to parse the manual test plan to the Manual.adoc File
+
+# COPYRIGHT:  (c) 2022 Robert Bosch Car Multimedia GmbH
+
+#
+
+#
+
+#***************************************************************************************
+
+import Helper
+
+import GenerateContent
+
+
+
+if __name__ == "__main__":
+
+    Helper.getConfigure()
+
+    GenerateContent.genManualDoc()
+
